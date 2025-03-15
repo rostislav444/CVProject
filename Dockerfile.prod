@@ -62,20 +62,35 @@ RUN apt-get update && apt-get install -y \
 
 # Install additional dependencies for WeasyPrint
 RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    fonts-liberation \
     libcairo2 \
     libpango-1.0-0 \
     libpangocairo-1.0-0 \
     libgdk-pixbuf2.0-0 \
     libffi-dev \
     shared-mime-info \
+    wget \
     --no-install-recommends && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# Add debian bullseye repository for newer pango packages
+RUN echo "deb http://deb.debian.org/debian bullseye main" > /etc/apt/sources.list.d/bullseye.list && \
+    apt-get update && apt-get install -y --no-install-recommends \
+    libpango-1.0-0 \
+    libpangocairo-1.0-0 \
+    libpangoft2-1.0-0 \
+    && apt-get clean && rm -rf /var/lib/apt/lists/* && \
+    rm /etc/apt/sources.list.d/bullseye.list
 
 COPY --from=builder /usr/src/app/wheels /wheels
 COPY --from=builder /usr/src/app/requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache /wheels/*
+
+# Downgrade WeasyPrint to a compatible version
+RUN pip uninstall -y weasyprint && pip install weasyprint==52.5
 
 # No entrypoint script needed - we use CMD in docker-compose.yml
 

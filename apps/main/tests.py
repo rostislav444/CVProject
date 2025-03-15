@@ -1,13 +1,13 @@
 from django.test import TestCase, Client
-from django.urls import reverse
-from .models import CV, Skill, CVSkill
+from apps.main.models import CV, Skill, CVSkill
 
 
 class CVListViewTests(TestCase):
     def setUp(self):
         # Initialize test client
         self.client = Client()
-        self.list_url = reverse('cv-list')
+        # Use the actual URL path instead of the name to avoid conflicts with the API URLs
+        self.list_url = '/'
         
         # Create test CV instances
         self.cv1 = CV.objects.create(

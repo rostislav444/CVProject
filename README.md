@@ -189,6 +189,7 @@ To run the tests for this project:
 
 ```bash
 python manage.py test apps.main.tests.CVListViewTests
+python manage.py test apps.main.api.tests.CVAPITests
 ```
 
 ## That's it!

@@ -7,4 +7,5 @@ urlpatterns = [
     # Web views
     path('', views.CVListView.as_view(), name='cv_list'),
     path('cv/<int:pk>/', views.CVDetailView.as_view(), name='cv_detail'),
+    path('cv/<int:pk>/pdf/', views.CVPDFView.as_view(), name='cv_pdf'),
 ]

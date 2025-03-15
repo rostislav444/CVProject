@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ cv.full_name }} - CV</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.5;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        .header {
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin: 0;
+            color: #007bff;
+        }
+        h2 {
+            color: #007bff;
+            margin-top: 20px;
+            font-size: 18px;
+            padding-bottom: 5px;
+            border-bottom: 1px solid #eee;
+        }
+        .job-title {
+            font-style: italic;
+            color: #555;
+            margin: 5px 0;
+        }
+        .contact-info {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .contact-item {
+            margin-bottom: 5px;
+        }
+        .section {
+            margin-bottom: 20px;
+        }
+        .project {
+            margin-bottom: 15px;
+        }
+        .project-title {
+            font-weight: bold;
+        }
+        .project-dates {
+            font-style: italic;
+            color: #666;
+        }
+        .skill-item {
+            margin-bottom: 8px;
+        }
+        .skill-name {
+            font-weight: bold;
+        }
+        .skill-level {
+            display: inline-block;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-size: 12px;
+            color: white;
+            background-color: #6c757d;
+        }
+        .level-beginner { background-color: #6c757d; }
+        .level-intermediate { background-color: #17a2b8; }
+        .level-advanced { background-color: #007bff; }
+        .level-expert { background-color: #28a745; }
+        .skill-bar {
+            height: 8px;
+            background-color: #eee;
+            border-radius: 4px;
+            margin-top: 3px;
+        }
+        .skill-progress {
+            height: 100%;
+            border-radius: 4px;
+        }
+        .progress-beginner { width: 25%; background-color: #6c757d; }
+        .progress-intermediate { width: 50%; background-color: #17a2b8; }
+        .progress-advanced { width: 75%; background-color: #007bff; }
+        .progress-expert { width: 100%; background-color: #28a745; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>{{ cv.full_name }}</h1>
+        <p class="job-title">{{ cv.title }}</p>
+    </div>
+    
+    <div class="contact-info">
+        {% for contact in cv.contacts.all %}
+            <div class="contact-item">
+                <strong>{{ contact.get_type_display }}:</strong> {{ contact.value }}
+            </div>
+        {% endfor %}
+    </div>
+    
+    <div class="section">
+        <h2>Summary</h2>
+        <p>{{ cv.summary }}</p>
+    </div>
+    
+    <div class="section">
+        <h2>Biography</h2>
+        <p>{{ cv.bio }}</p>
+    </div>
+    
+    <div class="section">
+        <h2>Skills</h2>
+        {% for cv_skill in cv.skills.all %}
+            <div class="skill-item">
+                <div>
+                    <span class="skill-name">{{ cv_skill.skill.name }}</span>
+                    <span class="skill-level level-{{ cv_skill.level }}">{{ cv_skill.get_level_display }}</span>
+                </div>
+                <div class="skill-bar">
+                    <div class="skill-progress progress-{{ cv_skill.level }}"></div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+    
+    <div class="section">
+        <h2>Projects</h2>
+        {% if cv.projects.all %}
+            {% for project in cv.projects.all %}
+                <div class="project">
+                    <div class="project-title">{{ project.name }}</div>
+                    <div class="project-dates">
+                        {{ project.start_date|date:"M Y" }} - 
+                        {% if project.end_date %}
+                            {{ project.end_date|date:"M Y" }}
+                        {% else %}
+                            Present
+                        {% endif %}
+                    </div>
+                    <div><strong>Technologies:</strong> {{ project.technologies }}</div>
+                    <p>{{ project.description }}</p>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>No projects specified.</p>
+        {% endif %}
+    </div>
+</body>
+</html>

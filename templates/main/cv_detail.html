@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %}CV: {{ cv.full_name }}{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+   <div class="col-md-8">
+       <h1>{{ cv.full_name }}</h1>
+       <h4 class="text-muted">{{ cv.title }}</h4>
+   </div>
+</div>
+
+<div class="row">
+   <div class="col-md-8">
+       <div class="card mb-4">
+           <div class="card-header">
+               <h5 class="mb-0">Summary</h5>
+           </div>
+           <div class="card-body">
+               <p>{{ cv.summary }}</p>
+           </div>
+       </div>
+
+       <div class="card mb-4">
+           <div class="card-header">
+               <h5 class="mb-0">Biography</h5>
+           </div>
+           <div class="card-body">
+               <p>{{ cv.bio }}</p>
+           </div>
+       </div>
+
+       <div class="card mb-4">
+           <div class="card-header">
+               <h5 class="mb-0">Projects</h5>
+           </div>
+           <div class="card-body">
+               {% if cv.projects.all %}
+                   {% for project in cv.projects.all %}
+                       <div class="mb-4">
+                           <h5>{{ project.name }}</h5>
+                           <p class="text-muted">
+                               {{ project.start_date|date:"M Y" }} - 
+                               {% if project.end_date %}
+                                   {{ project.end_date|date:"M Y" }}
+                               {% else %}
+                                   Present
+                               {% endif %}
+                           </p>
+                           <p><strong>Technologies:</strong> {{ project.technologies }}</p>
+                           <p>{{ project.description }}</p>
+                           {% if project.url %}
+                               <a href="{{ project.url }}" class="btn btn-sm btn-outline-secondary" target="_blank">View Project</a>
+                           {% endif %}
+                       </div>
+                       {% if not forloop.last %}<hr>{% endif %}
+                   {% endfor %}
+               {% else %}
+                   <p class="text-muted">No projects specified.</p>
+               {% endif %}
+           </div>
+       </div>
+   </div>
+   
+   <div class="col-md-4">
+       <div class="card mb-4">
+           <div class="card-header">
+               <h5 class="mb-0">Contact Information</h5>
+           </div>
+           <div class="card-body">
+               <ul class="list-group list-group-flush">
+                   {% for contact in cv.contacts.all %}
+                       <li class="list-group-item">
+                           <strong>{{ contact.get_type_display }}:</strong>
+                           {% if contact.type == 'email' %}
+                               <a href="mailto:{{ contact.value }}">{{ contact.value }}</a>
+                           {% elif contact.type == 'phone' %}
+                               <a href="tel:{{ contact.value }}">{{ contact.value }}</a>
+                           {% elif contact.type == 'linkedin' or contact.type == 'github' or contact.type == 'website' %}
+                               <a href="{{ contact.value }}" target="_blank">{{ contact.value }}</a>
+                           {% else %}
+                               {{ contact.value }}
+                           {% endif %}
+                       </li>
+                   {% endfor %}
+               </ul>
+           </div>
+       </div>
+
+       <div class="card mb-4">
+           <div class="card-header">
+               <h5 class="mb-0">Skills</h5>
+           </div>
+           <div class="card-body">
+               {% for cv_skill in cv.skills.all %}
+                   <div class="mb-3">
+                       <div class="d-flex justify-content-between align-items-center">
+                           <strong>{{ cv_skill.skill.name }}</strong>
+                           <span class="badge {% if cv_skill.level == 'beginner' %}bg-secondary{% elif cv_skill.level == 'intermediate' %}bg-info{% elif cv_skill.level == 'advanced' %}bg-primary{% else %}bg-success{% endif %}">
+                               {{ cv_skill.get_level_display }}
+                           </span>
+                       </div>
+                       <div class="progress" style="height: 10px;">
+                           <div class="progress-bar 
+                               {% if cv_skill.level == 'beginner' %}bg-secondary w-25
+                               {% elif cv_skill.level == 'intermediate' %}bg-info w-50
+                               {% elif cv_skill.level == 'advanced' %}bg-primary w-75
+                               {% else %}bg-success w-100{% endif %}" 
+                               role="progressbar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+                           </div>
+                       </div>
+                   </div>
+               {% endfor %}
+           </div>
+       </div>
+   </div>
+</div>
+{% endblock %}

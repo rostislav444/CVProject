@@ -1,0 +1,487 @@
+[
+  {
+    "model": "main.skill",
+    "pk": 1,
+    "fields": {
+      "name": "Python"
+    }
+  },
+  {
+    "model": "main.skill",
+    "pk": 2,
+    "fields": {
+      "name": "Django"
+    }
+  },
+  {
+    "model": "main.skill",
+    "pk": 3,
+    "fields": {
+      "name": "JavaScript"
+    }
+  },
+  {
+    "model": "main.skill",
+    "pk": 4,
+    "fields": {
+      "name": "Docker"
+    }
+  },
+  {
+    "model": "main.skill",
+    "pk": 5,
+    "fields": {
+      "name": "PostgreSQL"
+    }
+  },
+  {
+    "model": "main.cv",
+    "pk": 1,
+    "fields": {
+      "firstname": "Тарас",
+      "lastname": "Шевченко",
+      "bio": "Досвідчений full-stack розробник з більш ніж 5-річним досвідом створення веб-додатків. Спеціалізуюся на розробці з використанням Python/Django, приділяю особливу увагу написанню чистого, підтримуваного коду та впровадженню найкращих практик.",
+      "title": "Провідний Full-Stack розробник",
+      "summary": "Цілеспрямований розробник, захоплений створенням ефективних, масштабованих та зручних веб-додатків.",
+      "created_at": "2023-11-15T12:00:00Z",
+      "updated_at": "2023-11-15T12:00:00Z"
+    }
+  },
+  {
+    "model": "main.cvskill",
+    "pk": 1,
+    "fields": {
+      "cv": 1,
+      "skill": 1,
+      "level": "expert"
+    }
+  },
+  {
+    "model": "main.cvskill",
+    "pk": 2,
+    "fields": {
+      "cv": 1,
+      "skill": 2,
+      "level": "advanced"
+    }
+  },
+  {
+    "model": "main.cvskill",
+    "pk": 3,
+    "fields": {
+      "cv": 1,
+      "skill": 3,
+      "level": "intermediate"
+    }
+  },
+  {
+    "model": "main.cvskill",
+    "pk": 4,
+    "fields": {
+      "cv": 1,
+      "skill": 4,
+      "level": "intermediate"
+    }
+  },
+  {
+    "model": "main.cvskill",
+    "pk": 5,
+    "fields": {
+      "cv": 1,
+      "skill": 5,
+      "level": "advanced"
+    }
+  },
+  {
+    "model": "main.project",
+    "pk": 1,
+    "fields": {
+      "cv": 1,
+      "name": "Платформа електронної комерції",
+      "description": "Розробка масштабованої платформи електронної комерції на Django, включаючи обробку платежів, управління запасами та обліковими записами користувачів.",
+      "technologies": "Django, PostgreSQL, Redis, Celery, AWS",
+      "start_date": "2023-01-15",
+      "end_date": "2023-06-30",
+      "url": "https://github.com/example/ecommerce-platform"
+    }
+  },
+  {
+    "model": "main.project",
+    "pk": 2,
+    "fields": {
+      "cv": 1,
+      "name": "API керування задачами",
+      "description": "Розробка RESTful API для керування задачами з автентифікацією, дозволами та повним тестовим покриттям.",
+      "technologies": "Django REST Framework, JWT, Docker",
+      "start_date": "2022-07-10",
+      "end_date": "2022-10-05",
+      "url": "https://github.com/example/task-api"
+    }
+  },
+  {
+    "model": "main.contact",
+    "pk": 1,
+    "fields": {
+      "cv": 1,
+      "type": "email",
+      "value": "taras.shevchenko@example.com"
+    }
+  },
+  {
+    "model": "main.contact",
+    "pk": 2,
+    "fields": {
+      "cv": 1,
+      "type": "phone",
+      "value": "+380-99-123-4567"
+    }
+  },
+  {
+    "model": "main.contact",
+    "pk": 3,
+    "fields": {
+      "cv": 1,
+      "type": "linkedin",
+      "value": "https://linkedin.com/in/tarasshevchenko"
+    }
+  },
+  {
+    "model": "main.contact",
+    "pk": 4,
+    "fields": {
+      "cv": 1,
+      "type": "github",
+      "value": "https://github.com/tarasshevchenko"
+    }
+  },
+  {
+    "model": "main.cv",
+    "pk": 2,
+    "fields": {
+      "firstname": "Леся",
+      "lastname": "Українка",
+      "bio": "UI/UX дизайнер та frontend-розробник з досвідом створення привабливих та зручних інтерфейсів. Спеціалізуюся на React та сучасних CSS-фреймворках.",
+      "title": "Провідний UI/UX дизайнер",
+      "summary": "Творчий дизайнер з технічним бекграундом, що прагне до створення інтуїтивно зрозумілих користувацьких інтерфейсів.",
+      "created_at": "2024-01-10T10:30:00Z",
+      "updated_at": "2024-01-10T10:30:00Z"
+    }
+  },
+  {
+    "model": "main.cvskill",
+    "pk": 6,
+    "fields": {
+      "cv": 2,
+      "skill": 3,
+      "level": "expert"
+    }
+  },
+  {
+    "model": "main.skill",
+    "pk": 6,
+    "fields": {
+      "name": "React"
+    }
+  },
+  {
+    "model": "main.skill",
+    "pk": 7,
+    "fields": {
+      "name": "UI/UX Design"
+    }
+  },
+  {
+    "model": "main.skill",
+    "pk": 8,
+    "fields": {
+      "name": "CSS/SASS"
+    }
+  },
+  {
+    "model": "main.cvskill",
+    "pk": 7,
+    "fields": {
+      "cv": 2,
+      "skill": 6,
+      "level": "expert"
+    }
+  },
+  {
+    "model": "main.cvskill",
+    "pk": 8,
+    "fields": {
+      "cv": 2,
+      "skill": 7,
+      "level": "expert"
+    }
+  },
+  {
+    "model": "main.cvskill",
+    "pk": 9,
+    "fields": {
+      "cv": 2,
+      "skill": 8,
+      "level": "advanced"
+    }
+  },
+  {
+    "model": "main.project",
+    "pk": 3,
+    "fields": {
+      "cv": 2,
+      "name": "Редизайн корпоративного порталу",
+      "description": "Повний редизайн внутрішнього порталу компанії з фокусом на юзабіліті та доступність.",
+      "technologies": "React, Redux, Styled Components, Figma",
+      "start_date": "2023-05-20",
+      "end_date": "2023-08-15",
+      "url": null
+    }
+  },
+  {
+    "model": "main.project",
+    "pk": 4,
+    "fields": {
+      "cv": 2,
+      "name": "Мобільний додаток для трекінгу фітнесу",
+      "description": "Дизайн та прототипування мобільного додатку для відстеження фізичної активності та харчування.",
+      "technologies": "Figma, React Native, Adobe XD",
+      "start_date": "2023-09-01",
+      "end_date": null,
+      "url": "https://www.behance.net/gallery/example-fitness-app"
+    }
+  },
+  {
+    "model": "main.contact",
+    "pk": 5,
+    "fields": {
+      "cv": 2,
+      "type": "email",
+      "value": "lesia.ukrainka@example.com"
+    }
+  },
+  {
+    "model": "main.contact",
+    "pk": 6,
+    "fields": {
+      "cv": 2,
+      "type": "website",
+      "value": "https://lesiadesign.ua"
+    }
+  },
+  {
+    "model": "main.contact",
+    "pk": 7,
+    "fields": {
+      "cv": 2,
+      "type": "github",
+      "value": "https://github.com/lesiadesign"
+    }
+  },
+  {
+    "model": "main.skill",
+    "pk": 9,
+    "fields": {
+      "name": "Node.js"
+    }
+  },
+  {
+    "model": "main.skill",
+    "pk": 10,
+    "fields": {
+      "name": "Vue.js"
+    }
+  },
+  {
+    "model": "main.skill",
+    "pk": 11,
+    "fields": {
+      "name": "AWS"
+    }
+  },
+  {
+    "model": "main.cv",
+    "pk": 3,
+    "fields": {
+      "firstname": "Богдан",
+      "lastname": "Хмельницький",
+      "bio": "DevOps інженер з глибоким розумінням хмарних технологій та автоматизації. Маю значний досвід у розгортанні та підтримці високонавантажених систем.",
+      "title": "Senior DevOps Engineer",
+      "summary": "Досвідчений DevOps інженер, що спеціалізується на AWS та автоматизації процесів розробки.",
+      "created_at": "2024-02-15T09:00:00Z",
+      "updated_at": "2024-02-15T09:00:00Z"
+    }
+  },
+  {
+    "model": "main.cvskill",
+    "pk": 10,
+    "fields": {
+      "cv": 3,
+      "skill": 4,
+      "level": "expert"
+    }
+  },
+  {
+    "model": "main.cvskill",
+    "pk": 11,
+    "fields": {
+      "cv": 3,
+      "skill": 11,
+      "level": "expert"
+    }
+  },
+  {
+    "model": "main.project",
+    "pk": 5,
+    "fields": {
+      "cv": 3,
+      "name": "Міграція інфраструктури до AWS",
+      "description": "Успішна міграція корпоративної інфраструктури до AWS з впровадженням принципів Infrastructure as Code.",
+      "technologies": "AWS, Terraform, Docker, Kubernetes",
+      "start_date": "2023-03-01",
+      "end_date": "2023-12-31",
+      "url": null
+    }
+  },
+  {
+    "model": "main.contact",
+    "pk": 8,
+    "fields": {
+      "cv": 3,
+      "type": "email",
+      "value": "bohdan.khmelnytsky@example.com"
+    }
+  },
+  {
+    "model": "main.contact",
+    "pk": 9,
+    "fields": {
+      "cv": 3,
+      "type": "phone",
+      "value": "+380-67-789-1234"
+    }
+  },
+  {
+    "model": "main.cv",
+    "pk": 4,
+    "fields": {
+      "firstname": "Оксана",
+      "lastname": "Забужко",
+      "bio": "Backend розробник з фокусом на високонавантажені системи та оптимізацію баз даних. Експерт з масштабування та підвищення продуктивності.",
+      "title": "Senior Backend Developer",
+      "summary": "Досвідчений розробник, що спеціалізується на створенні ефективних та надійних серверних рішень.",
+      "created_at": "2024-03-01T11:00:00Z",
+      "updated_at": "2024-03-01T11:00:00Z"
+    }
+  },
+  {
+    "model": "main.cvskill",
+    "pk": 12,
+    "fields": {
+      "cv": 4,
+      "skill": 1,
+      "level": "expert"
+    }
+  },
+  {
+    "model": "main.cvskill",
+    "pk": 13,
+    "fields": {
+      "cv": 4,
+      "skill": 5,
+      "level": "expert"
+    }
+  },
+  {
+    "model": "main.project",
+    "pk": 6,
+    "fields": {
+      "cv": 4,
+      "name": "Система аналітики даних",
+      "description": "Розробка високопродуктивної системи аналітики для обробки великих обсягів даних у реальному часі.",
+      "technologies": "Python, PostgreSQL, Redis, Apache Kafka",
+      "start_date": "2023-06-01",
+      "end_date": null,
+      "url": "https://github.com/example/analytics-platform"
+    }
+  },
+  {
+    "model": "main.contact",
+    "pk": 10,
+    "fields": {
+      "cv": 4,
+      "type": "email",
+      "value": "oksana.zabuzhko@example.com"
+    }
+  },
+  {
+    "model": "main.contact",
+    "pk": 11,
+    "fields": {
+      "cv": 4,
+      "type": "phone",
+      "value": "+380-63-456-7890"
+    }
+  },
+  {
+    "model": "main.cv",
+    "pk": 5,
+    "fields": {
+      "firstname": "Василь",
+      "lastname": "Стус",
+      "bio": "Full-stack розробник з глибоким розумінням сучасних веб-технологій. Маю досвід створення складних SPA та прогресивних веб-додатків.",
+      "title": "Full-Stack Developer",
+      "summary": "Універсальний розробник з пристрастю до створення інноваційних веб-рішень.",
+      "created_at": "2024-03-10T14:00:00Z",
+      "updated_at": "2024-03-10T14:00:00Z"
+    }
+  },
+  {
+    "model": "main.cvskill",
+    "pk": 14,
+    "fields": {
+      "cv": 5,
+      "skill": 3,
+      "level": "expert"
+    }
+  },
+  {
+    "model": "main.cvskill",
+    "pk": 15,
+    "fields": {
+      "cv": 5,
+      "skill": 10,
+      "level": "advanced"
+    }
+  },
+  {
+    "model": "main.project",
+    "pk": 7,
+    "fields": {
+      "cv": 5,
+      "name": "Платформа онлайн-навчання",
+      "description": "Розробка інтерактивної платформи для дистанційного навчання з підтримкою відеоконференцій та інтерактивних завдань.",
+      "technologies": "Vue.js, Node.js, WebRTC, MongoDB",
+      "start_date": "2023-08-15",
+      "end_date": null,
+      "url": "https://github.com/example/learning-platform"
+    }
+  },
+  {
+    "model": "main.contact",
+    "pk": 12,
+    "fields": {
+      "cv": 5,
+      "type": "email",
+      "value": "vasyl.stus@example.com"
+    }
+  },
+  {
+    "model": "main.contact",
+    "pk": 13,
+    "fields": {
+      "cv": 5,
+      "type": "phone",
+      "value": "+380-98-234-5678"
+    }
+  }
+]

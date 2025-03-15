@@ -180,7 +180,7 @@ Deploy this project to DigitalOcean or any other VPS. (If you do not have a Digi
 To load the sample CV data from fixtures:
 
 ```bash
-python manage.py loaddata main/fixtures/sample_cvs.json
+python manage.py loaddata apps/main/fixtures/sample_cvs.json
 ```
 
 ## Running Tests
@@ -188,7 +188,7 @@ python manage.py loaddata main/fixtures/sample_cvs.json
 To run the tests for this project:
 
 ```bash
-python manage.py test
+python manage.py test apps.main.tests.CVListViewTests
 ```
 
 ## That's it!

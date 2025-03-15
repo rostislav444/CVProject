@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}CV List{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">CV Collection</h1>
+    </div>
+</div>
+
+<div class="row">
+    {% if cvs %}
+        {% for cv in cvs %}
+            <div class="col-md-6 col-lg-4 mb-4">
+                <div class="card cv-card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title mb-3">{{ cv.full_name }}</h5>
+                        
+                        <h6 class="card-subtitle mb-3 text-muted">{{ cv.title }}</h6>
+                        
+                        <p class="card-text mb-4">{{ cv.summary|truncatewords:20 }}</p>
+                        
+                        <h6 class="mt-4 mb-3">Skills:</h6>
+                        <div class="mb-4">
+                            {% for cv_skill in cv.skills.all|slice:":5" %}
+                                <span class="badge bg-primary me-2 mb-2">{{ cv_skill.skill.name }}</span>
+                            {% endfor %}
+                            {% if cv.skills.count > 5 %}
+                                <span class="badge bg-secondary">+{{ cv.skills.count|add:"-5" }} more</span>
+                            {% endif %}
+                        </div>
+                        
+                        <a href="{% url 'cv-detail' cv.id %}" class="btn btn-outline-primary mt-3">View Details</a>
+                    </div>
+                    
+                    <div class="card-footer text-muted">
+                        Updated: {{ cv.updated_at|date:"j F Y" }}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-12">
+            <div class="alert alert-info">
+                No CVs available yet. Add data to see content.
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

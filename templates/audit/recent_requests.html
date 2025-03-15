@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block title %}Recent Requests Log{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+    <h1>Recent Requests</h1>
+    <div class="card">
+        <div class="card-header">
+            <h5>Last 10 Requests</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Method</th>
+                        <th>Path</th>
+                        <th>IP Address</th>
+                        <th>User</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for request in requests %}
+                    <tr>
+                        <td>{{ request.timestamp }}</td>
+                        <td>{{ request.method }}</td>
+                        <td>{{ request.path }}</td>
+                        <td>{{ request.remote_addr|default:"Not available" }}</td>
+                        <td>{{ request.user|default:"Anonymous" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">No requests logged yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

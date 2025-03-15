@@ -1,15 +1,4 @@
 services:
-  web:
-    build: .
-    ports:
-      - "8000:8000"
-    depends_on:
-      - db
-    env_file:
-      - .env
-    volumes:
-      - .:/app
-
   db:
     image: postgres:14
     volumes:
@@ -22,6 +11,44 @@ services:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
     ports:
       - "5432:5432"
+
+  web:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - rabbitmq
+    env_file:
+      - .env
+    volumes:
+      - .:/app
+    entrypoint: ["/app/entrypoint.sh"]
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    entrypoint: ["/app/entrypoint.sh"]
+    command: ["celery", "-A", "project", "worker", "--loglevel=info"]
+    volumes:
+      - .:/app
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - rabbitmq
+
 
 volumes:
   postgres_data:

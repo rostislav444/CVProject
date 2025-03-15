@@ -1,15 +1,19 @@
 import os
+import json
 from io import BytesIO
 
 from django.conf import settings
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
+from django.contrib import messages
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404, redirect
 from django.template.loader import render_to_string
+from django.urls import reverse
 from django.views import View
 from django.views.generic import DetailView, ListView
 from weasyprint import CSS, HTML
 
 from .models import CV
+from .tasks import send_cv_pdf_email
 
 
 class CVListView(ListView):
@@ -66,3 +70,27 @@ class CVPDFView(View):
         )
 
         return response
+
+
+class CVEmailPDFView(View):
+    """Send CV as PDF via email using Celery"""
+    
+    def post(self, request, pk):
+        # Get the email from the form
+        email = request.POST.get('email')
+        
+        if not email:
+            messages.error(request, "Email address is required.")
+            return redirect('main:cv_detail', pk=pk)
+            
+        # Get the site URL for generating absolute URLs in the PDF
+        site_url = f"{request.scheme}://{request.get_host()}"
+        
+        # Queue the Celery task to send the email
+        send_cv_pdf_email.delay(pk, email, site_url)
+        
+        # Add a success message
+        messages.success(request, f"CV will be sent to {email} shortly.")
+        
+        # Redirect back to the CV detail page
+        return redirect('main:cv_detail', pk=pk)

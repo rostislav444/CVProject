@@ -9,25 +9,20 @@ ENV PYTHONUNBUFFERED 1
 RUN apt-get update && apt-get install -y netcat-openbsd
 
 RUN pip install --upgrade pip
-RUN pip install poetry
 
-# Copy README.md first (needed for poetry)
-COPY README.md /app/
+# Copy requirements file
+COPY requirements.txt /app/
 
-# Copy dependency files
-COPY pyproject.toml poetry.lock* /app/
-
-# Install dependencies without installing the project itself
-RUN poetry config virtualenvs.create false \
-    && poetry install --no-interaction --no-ansi --no-root
+# Install Python dependencies
+RUN pip install -r requirements.txt
 
 # Copy the rest of the project
 COPY . /app/
 
-# Make entrypoint script executable
+# Make scripts executable
 RUN chmod +x /app/entrypoint.sh
 
 EXPOSE 8000
 
-# Use entrypoint script
-ENTRYPOINT ["/app/entrypoint.sh"]
+# Default command - can be overridden in docker-compose.yml
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

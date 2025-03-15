@@ -199,7 +199,7 @@ This project can be run using Docker and Docker Compose, which handles setting u
 ### Prerequisites
 
 - Docker and Docker Compose installed on your machine
-- Make sure ports 8000 and 5432 are available on your system
+- Make sure ports 8000, 5432, 5672 (RabbitMQ) and 15672 (RabbitMQ management) are available on your system
 
 ### Running with Docker
 
@@ -234,6 +234,42 @@ The project uses environment variables stored in a `.env` file for configuration
 - `DB_PASSWORD`: PostgreSQL password
 - `DB_HOST`: PostgreSQL host (set to 'db' for Docker setup)
 - `DB_PORT`: PostgreSQL port (default: 5432)
+
+## Celery Setup (Task 7)
+
+This project uses Celery for background task processing, such as sending emails with PDF attachments.
+
+### Components
+
+- **Celery Worker**: Processes background tasks like PDF generation and email sending
+- **RabbitMQ**: Acts as the message broker between Django and Celery
+- **Email Configuration**: Configured to use console backend in development
+
+### Usage
+
+When running with Docker Compose, the Celery worker is automatically started. To test the email functionality:
+
+1. Visit a CV detail page
+2. Click on the "Email PDF" button
+3. Enter an email address in the form
+4. Submit the form
+
+The email task will be processed in the background by Celery, and you'll see the output in the console of the Celery worker container.
+
+### Environment Variables for Celery
+
+- `CELERY_BROKER_URL`: RabbitMQ connection string (default: amqp://user:password@rabbitmq:5672//)
+- `CELERY_RESULT_BACKEND`: Celery result backend (default: rpc://)
+
+### Environment Variables for Email
+
+- `EMAIL_BACKEND`: Email backend class (default: console backend)
+- `EMAIL_HOST`: SMTP host (e.g., smtp.gmail.com)
+- `EMAIL_PORT`: SMTP port (default: 587)
+- `EMAIL_USE_TLS`: Whether to use TLS (default: True)
+- `EMAIL_HOST_USER`: SMTP username
+- `EMAIL_HOST_PASSWORD`: SMTP password
+- `DEFAULT_FROM_EMAIL`: Default sender email address
 
 ## That's it!
 

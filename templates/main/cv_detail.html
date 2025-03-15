@@ -9,9 +9,40 @@
        <h4 class="text-muted">{{ cv.title }}</h4>
    </div>
    <div class="col-md-4 text-end">
-       <a href="{% url 'main:cv_pdf' cv.pk %}" class="btn btn-primary">
-           <i class="fas fa-file-pdf me-2"></i>Download PDF
-       </a>
+       <div class="d-flex justify-content-end">
+           <a href="{% url 'main:cv_pdf' cv.pk %}" class="btn btn-primary me-2">
+               <i class="bi bi-file-pdf me-1"></i>Download PDF
+           </a>
+           <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#emailPdfModal">
+               <i class="bi bi-envelope me-1"></i>Email PDF
+           </button>
+       </div>
+   </div>
+   
+   <!-- Email PDF Modal -->
+   <div class="modal fade" id="emailPdfModal" tabindex="-1" aria-labelledby="emailPdfModalLabel" aria-hidden="true">
+     <div class="modal-dialog">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h5 class="modal-title" id="emailPdfModalLabel">Send CV as PDF</h5>
+           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+         </div>
+         <form action="{% url 'main:cv_email_pdf' cv.pk %}" method="post">
+           {% csrf_token %}
+           <div class="modal-body">
+             <div class="mb-3">
+               <label for="email" class="form-label">Email address</label>
+               <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+               <div class="form-text">We'll send a PDF of this CV to the email address provided.</div>
+             </div>
+           </div>
+           <div class="modal-footer">
+             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+             <button type="submit" class="btn btn-primary">Send</button>
+           </div>
+         </form>
+       </div>
+     </div>
    </div>
 </div>
 

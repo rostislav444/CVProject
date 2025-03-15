@@ -192,6 +192,49 @@ python manage.py test apps.main.tests.CVListViewTests
 python manage.py test apps.main.api.tests.CVAPITests
 ```
 
+## Docker Setup (Task 6)
+
+This project can be run using Docker and Docker Compose, which handles setting up the PostgreSQL database and Django application in isolated containers.
+
+### Prerequisites
+
+- Docker and Docker Compose installed on your machine
+- Make sure ports 8000 and 5432 are available on your system
+
+### Running with Docker
+
+1. Build and start the containers:
+   ```bash
+   docker-compose up --build
+   ```
+
+2. Access the application at http://localhost:8000
+
+3. To run commands inside the container:
+   ```bash
+   docker-compose exec web python manage.py <command>
+   ```
+
+4. To run tests inside the container:
+   ```bash
+   docker-compose exec web python manage.py test
+   ```
+
+5. To stop the containers:
+   ```bash
+   docker-compose down
+   ```
+
+### Environment Variables
+
+The project uses environment variables stored in a `.env` file for configuration. The main variables include:
+
+- `DB_NAME`: PostgreSQL database name
+- `DB_USER`: PostgreSQL username
+- `DB_PASSWORD`: PostgreSQL password
+- `DB_HOST`: PostgreSQL host (set to 'db' for Docker setup)
+- `DB_PORT`: PostgreSQL port (default: 5432)
+
 ## That's it!
 
 Complete each task thoroughly, commit your work following the branch-and-merge structure, and make sure your README.md clearly explains how to install, run, and test everything.

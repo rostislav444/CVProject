@@ -271,6 +271,51 @@ The email task will be processed in the background by Celery, and you'll see the
 - `EMAIL_HOST_PASSWORD`: SMTP password
 - `DEFAULT_FROM_EMAIL`: Default sender email address
 
+## Translation Setup (Task 8)
+
+This project includes AI-powered translation for CV content into rare languages.
+
+### Features
+
+- Translation button on the CV detail page
+- Language selector with 17 rare languages (Cornish, Manx, Breton, etc.)
+- Support for either OpenAI or Anthropic Claude as translation providers
+
+### Configuration
+
+To enable translations, set up the following environment variables in your `.env` file:
+
+- `OPENAI_API_KEY`: Your OpenAI API key
+- `ANTHROPIC_API_KEY`: Your Anthropic API key (optional, will fall back to OpenAI if not provided)
+
+### How It Works
+
+1. The translation service extracts text content from the CV
+2. Content is sent to the AI service (Anthropic Claude preferred, OpenAI as fallback)
+3. The AI model translates the content to the selected language
+4. Translated content is displayed in a format that preserves the original structure
+
+### Supported Languages
+
+The system supports translation to these languages:
+- Cornish
+- Manx
+- Breton
+- Inuktitut
+- Kalaallisut
+- Romani
+- Occitan
+- Ladino
+- Northern Sami
+- Upper Sorbian
+- Kashubian
+- Zazaki
+- Chuvash
+- Livonian
+- Tsakonian
+- Saramaccan
+- Bislama
+
 ## That's it!
 
 Complete each task thoroughly, commit your work following the branch-and-merge structure, and make sure your README.md clearly explains how to install, run, and test everything.

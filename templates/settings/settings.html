@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Django Settings{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">Django Settings</h1>
+        
+        {% for key, value in settings.items %}
+            {% include "settings/settings_block.html" with key=key value=value level=0 %}
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

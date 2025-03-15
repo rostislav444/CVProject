@@ -1,0 +1,32 @@
+{% comment %}
+    Recursive template for displaying Django settings blocks
+    Parameters:
+    - key: setting key
+    - value: setting value
+    - level: nesting level (0 - root)
+{% endcomment %}
+
+{% if level == 0 %}
+<div class="card mb-4">
+    <div class="card-header bg-primary text-white">
+        <h2 class="h5 mb-0">{{ key }}</h2>
+    </div>
+    <div class="card-body">
+        {% include "settings/settings_value.html" with key=key value=value level=level %}
+    </div>
+</div>
+{% elif value.items or value|default:""|length > 0 and value|first|default:"" != value|first|default:"X"|stringformat:"s" %}
+<div class="card mt-3 mb-3">
+    <div class="card-header bg-{% if level == 1 %}secondary{% elif level == 2 %}info{% else %}light{% endif %} {% if level < 3 %}text-white{% endif %}">
+        <h3 class="h6 mb-0">{{ key }}</h3>
+    </div>
+    <div class="card-body">
+        {% include "settings/settings_value.html" with key=key value=value level=level %}
+    </div>
+</div>
+{% else %}
+<div class="mt-2">
+    <strong>{{ key }}:</strong>
+    {% include "settings/settings_value.html" with key=key value=value level=level %}
+</div>
+{% endif %}

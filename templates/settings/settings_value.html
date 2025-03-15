@@ -1,0 +1,49 @@
+{% comment %}
+    Recursive template for displaying Django settings values
+    Parameters:
+    - key: setting key
+    - value: setting value
+    - level: nesting level
+{% endcomment %}
+
+{% if value|default:"" and value|first|default:"" == value|first|default:"X" and value|first|default:""|stringformat:"s"|length == 1 and value|length > 1 and value != True and value != False %}
+    {% comment %} String value {% endcomment %}
+    <span>{{ value }}</span>
+{% elif value|default:"" and value.items|default:"" %}
+    {% comment %} Dictionary {% endcomment %}
+    <div class="ml-{% if level > 0 %}{{ level|add:3 }}{% else %}0{% endif %}">
+        {% for sub_key, sub_value in value.items %}
+            {% include "settings/settings_block.html" with key=sub_key value=sub_value level=level|add:1 %}
+        {% endfor %}
+    </div>
+{% elif value|default:""|length > 0 and value|first|stringformat:"s" != value|first|default:"" %}
+    {% comment %} List of objects {% endcomment %}
+    <div class="ml-{% if level > 0 %}{{ level|add:3 }}{% else %}0{% endif %}">
+        {% for item in value %}
+            {% if item|default:"" and item.items|default:"" %}
+                <div class="mt-2 border-left pl-3">
+                    <strong>Element {{ forloop.counter }}:</strong>
+                    <div class="ml-3">
+                        {% for sub_key, sub_value in item.items %}
+                            {% include "settings/settings_block.html" with key=sub_key value=sub_value level=level|add:2 %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% else %}
+                <div class="mt-1"><strong>{{ forloop.counter }}:</strong> {{ item }}</div>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% elif value|default:""|length > 0 %}
+    {% comment %} Regular list {% endcomment %}
+    <ul>
+        {% for item in value %}
+            <li>{{ item }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    {% comment %} Simple value {% endcomment %}
+    <span class="{% if value == True %}text-success{% elif value == False %}text-danger{% endif %}">
+        {{ value }}
+    </span>
+{% endif %}

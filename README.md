@@ -316,6 +316,49 @@ The system supports translation to these languages:
 - Saramaccan
 - Bislama
 
+## Production Deployment Setup (Task 9)
+
+This project is configured for production deployment using Docker Compose with nginx, Gunicorn, and PostgreSQL.
+
+### Production Files
+
+- `Dockerfile.prod`: Multi-stage build Dockerfile optimized for production
+- `docker-compose.prod.yml`: Docker Compose configuration for production environment
+- `.env.prod`: Production environment variables (do not commit with real secrets)
+- `nginx/`: Nginx configuration for serving the application
+- `entrypoint.prod.sh`: Production entrypoint script for container initialization
+
+### Running in Production
+
+1. Set up the production environment variables:
+   ```bash
+   cp .env.prod .env
+   # Edit .env with your production settings and secrets
+   ```
+
+2. Build and start the production containers:
+   ```bash
+   docker-compose -f docker-compose.prod.yml up --build
+   ```
+
+3. Access the application at http://your-server-ip:80
+
+4. To run management commands in production:
+   ```bash
+   docker-compose -f docker-compose.prod.yml exec web python manage.py <command>
+   ```
+
+5. To stop the production containers:
+   ```bash
+   docker-compose -f docker-compose.prod.yml down
+   ```
+
+### Security Notes
+
+- Always change the default secret keys and passwords before deploying to production
+- Consider using a proper SSL certificate if deploying to a public domain
+- Review the Django deployment checklist: https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
+
 ## That's it!
 
 Complete each task thoroughly, commit your work following the branch-and-merge structure, and make sure your README.md clearly explains how to install, run, and test everything.

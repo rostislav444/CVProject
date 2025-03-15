@@ -1,0 +1,89 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    restart: always
+    expose:
+      - 8000
+    volumes:
+      - static_volume:/home/app/web/static
+      - media_volume:/home/app/web/media
+    env_file:
+      - .env
+    depends_on:
+      - db
+      - rabbitmq
+    command: >
+      bash -c "
+        # Wait for PostgreSQL
+        while ! nc -z db 5432; do sleep 1; done
+        echo 'PostgreSQL is ready'
+        
+        # Apply migrations and start Gunicorn
+        python manage.py migrate
+        gunicorn --bind 0.0.0.0:8000 project.wsgi:application --workers 3
+      "
+
+  nginx:
+    build: ./nginx
+    restart: always
+    ports:
+      - 80:80
+    volumes:
+      - static_volume:/home/app/web/static
+      - media_volume:/home/app/web/media
+    depends_on:
+      - web
+
+  db:
+    image: postgres:14
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_DB=${DB_NAME}
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    restart: always
+    ports:
+      - 5672:5672
+      - 15672:15672
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    restart: always
+    volumes:
+      - ./:/home/app/web/
+    env_file:
+      - .env
+    depends_on:
+      - web
+      - rabbitmq
+      - db
+    command: >
+      bash -c "
+        # Wait for web service to be up (which means PostgreSQL is also up)
+        while ! nc -z web 8000; do sleep 1; done
+        echo 'Web service is ready'
+        
+        # Start Celery worker
+        celery -A project worker -l info
+      "
+
+volumes:
+  static_volume:
+  media_volume:
+  postgres_data:
